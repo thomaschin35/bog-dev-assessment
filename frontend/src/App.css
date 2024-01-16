@@ -1,0 +1,32 @@
+.App {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* Added this line */
+}
+
+.Table {
+  width: 95%;
+  margin: 1em;
+}
+
+.AddCard {
+  width: 95%;
+  margin: 1em;
+  padding: 2%;
+}
+
+.select {
+  width: 50%;
+  margin: 1em;
+  padding: 2%;
+}
+
+.input {
+  margin: 1em;
+}
+.actionButton {
+  margin: 1em;
+}
