@@ -6,16 +6,25 @@
   flex-direction: column;
   /* Added this line */
 }
+.title{
+  margin: 1em;
+
+}
 
 .Table {
   width: 95%;
   margin: 1em;
 }
 
-.AddCard {
+.ActionCard {
   width: 95%;
   margin: 1em;
   padding: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
 }
 
 .select {
@@ -29,4 +38,22 @@
 }
 .actionButton {
   margin: 1em;
+}
+.NotesPage {
+  margin: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.NotesCard {
+  padding: 2%;
+}
+.clickCountDiv {
+  margin: 2em;
+}
+.countBox {
+  padding: 3%;
+  background-color:rgb(209, 252, 252);
+  border: 1px solid rgb(0, 0, 0);
 }
