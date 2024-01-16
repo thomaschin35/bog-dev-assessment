@@ -4,11 +4,16 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* Added this line */
 }
-.title{
-  margin: 1em;
 
+.title {
+  margin-top: 1em;
+  width: 100%;
+
+}
+
+.roleButton {
+  margin: 1em;
 }
 
 .Table {
@@ -24,7 +29,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  
+
 }
 
 .select {
@@ -36,9 +41,11 @@
 .input {
   margin: 1em;
 }
+
 .actionButton {
   margin: 1em;
 }
+
 .NotesPage {
   margin: 1em;
   display: flex;
@@ -46,14 +53,42 @@
   align-items: center;
   flex-direction: column;
 }
+
 .NotesCard {
   padding: 2%;
 }
+
 .clickCountDiv {
   margin: 2em;
 }
+
 .countBox {
   padding: 3%;
-  background-color:rgb(209, 252, 252);
+  background-color: #E2FADB;
   border: 1px solid rgb(0, 0, 0);
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #E2FADB;
+  padding: 1em;
+}
+
+@media (max-width: 768px) {
+  .topBar {
+    flex-direction: column;
+  }
+
+  .toolBar {
+    flex-wrap: wrap;
+  }
+
+}
+
+.toolBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

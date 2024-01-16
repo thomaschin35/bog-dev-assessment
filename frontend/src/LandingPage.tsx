@@ -1,4 +1,13 @@
-import React, { useEffect, useState } from "react";
+/**
+ * This is the main landing page of the application.
+ *
+ * It contains the table of volunteers, action card for adding, updating,
+ * and deleting volunteers, and a click count retrieval box.
+ *
+ * It also contains the api logic for adding, updating, and deleting volunteers.
+ */
+
+import { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import {
   Button,
@@ -12,6 +21,7 @@ import {
   Select,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   name: string;
@@ -25,7 +35,7 @@ interface User {
   id: string;
 }
 
-const LandingPage = () => {
+const LandingPage = ({ role }: { role: string }) => {
   const [rows, setRows] = useState<User[]>([]);
   const [name, setName] = useState("Jeff");
   const [avatar, setAvatar] = useState("");
@@ -40,6 +50,8 @@ const LandingPage = () => {
   const [clickId, setClickId] = useState("");
   const [clickCounts, setClickCounts] = useState<Record<string, number>>({});
   const ariaLabel = { "aria-label": "description" };
+  const navigate = useNavigate();
+  // fetch the data from the backend
   useEffect(() => {
     fetch("http://localhost:4000/api/bog/users")
       .then((response) => response.json())
@@ -47,30 +59,35 @@ const LandingPage = () => {
   }, []);
 
   const handleActionClick = async () => {
-    try {
-      const inputData = {
-        name,
-        avatar,
-        hero_project: heroProject,
-        notes,
-        email,
-        phone,
-        rating,
-        status,
-        id,
-      };
+    if (role === "admin") {
+      try {
+        const inputData = {
+          name,
+          avatar,
+          hero_project: heroProject,
+          notes,
+          email,
+          phone,
+          rating,
+          status,
+          id,
+        };
 
-      console.log(inputData);
+        console.log(inputData);
 
-      if (action === "Add New Volunteer") {
-        await addVolunteer(inputData);
-      } else if (action === "Update Volunteer") {
-        await updateVolunteer(inputData);
-      } else if (action === "Delete Volunteer") {
-        await deleteVolunteer();
+        if (action === "Add New Volunteer") {
+          await addVolunteer(inputData);
+        } else if (action === "Update Volunteer") {
+          await updateVolunteer(inputData);
+        } else if (action === "Delete Volunteer") {
+          await deleteVolunteer();
+        }
+      } catch (error) {
+        console.error("Error performing action:", error);
       }
-    } catch (error) {
-      console.error("Error performing action:", error);
+    } else {
+      alert("You are not authorized to perform this action!");
+      return;
     }
   };
 
@@ -125,17 +142,33 @@ const LandingPage = () => {
       console.error("Error deleting volunteer:", error);
     }
   };
+  const handleRoleClick = () => {
+    if (role === "admin") {
+      console.log("ASdfasdf");
+      return navigate("/viewer");
+    } else {
+      return navigate("/admin");
+    }
+  };
+
   return (
     <div className="App">
       <div className="title">
         <Typography variant="h4">
           HaHa Heroes Volunteer Management System
         </Typography>
+        <div className="roleButton">
+          <Button
+            onClick={handleRoleClick}
+            style={{ backgroundColor: "#5F634F", color: "white", width: "15%" }}
+          >
+            {role === "admin" ? "Admin" : "Viewer"}
+          </Button>
+        </div>
       </div>
-      <div className="Table">
-        <TableComponent rows={rows} setClickCount={setClickCounts}/>
-      </div>
-      <Card className="ActionCard">
+      <TableComponent rows={rows} setClickCount={setClickCounts} />
+
+      <Card className="ActionCard" style={{ backgroundColor: "#E2FADB" }}>
         <Typography variant="h5">{action}</Typography>
         <div className="select">
           <FormControl fullWidth>
@@ -226,13 +259,18 @@ const LandingPage = () => {
           )}
         </div>
         <div className="actionButton">
-          <Button variant="contained" onClick={handleActionClick}>
+          <Button
+            onClick={handleActionClick}
+            style={{ backgroundColor: "#5F634F", color: "white" }}
+          >
             {action}
           </Button>
         </div>
       </Card>
       <div className="clickCountDiv">
-        <u><Typography variant="h5">Retrieve Click Count</Typography></u>
+        <u>
+          <Typography variant="h5">Retrieve Click Count</Typography>
+        </u>
         <Input
           className="input"
           placeholder="Enter ID"
@@ -240,7 +278,10 @@ const LandingPage = () => {
           inputProps={ariaLabel}
         />
         <div className="countBox">
-            <Typography variant="h6">Click Count: {clickCounts[clickId] == undefined ? 0 : clickCounts[clickId]}</Typography>
+          <Typography variant="h6">
+            Click Count:{" "}
+            {clickCounts[clickId] === undefined ? 0 : clickCounts[clickId]}
+          </Typography>
         </div>
       </div>
     </div>
