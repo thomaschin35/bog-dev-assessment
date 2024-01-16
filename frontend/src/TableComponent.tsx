@@ -113,7 +113,7 @@ const TableComponent = ({
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell align="right">Avatar</TableCell>
+              <TableCell align="left">Avatar</TableCell>
               <TableCell align="right">Hero Project</TableCell>
               <TableCell align="right">Email</TableCell>
               <TableCell align="right">Phone</TableCell>
